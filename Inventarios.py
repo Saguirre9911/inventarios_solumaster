@@ -5,7 +5,9 @@ from tkinter import messagebox
 
 import pandas as pd
 from pynput import keyboard as kb
-
+import pandas as pd
+import sys
+import io
 ##SE REQUIERE GUARDAR EL ARCHIVO EN LA CARPETA CON EL NOMBRE Excel enviar.xlsx
 
 # declaración globales
@@ -13,7 +15,8 @@ producto_actual = "Hola mundo"
 ultimo_escrito_codigo = ""
 ultimo_escrito_cantidad = ""
 # PROPUESTA SIGUIENTE, CREAR EL BOT QUE ACTUALICE ESTE CODIGO FUENTE AUTOMATICAMENTE PONIENDO LOS ARCHIVOS EN SU LUGAR.
-
+# Cambia la codificación de la salida estándar
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 # Se requiere ajustar a la dirección del archivo en el pc de mamá
 # Ruta al archivo SIEMPRE SE DEBE EDITAR SI CAMBIA EL NOMBRE DEL ARCHIVO
@@ -70,7 +73,7 @@ codigo_tinta.pack()
 
 # Función para ejecutar el archivo externo
 def ejecutar_script_externo():
-    subprocess.run(["python3", "consolidado_inventarios.py"], check=True)
+    subprocess.run(["python", "consolidado_inventarios.py"], check=True)
 
 
 # Frame para los botones
@@ -126,7 +129,7 @@ def pulsa(tecla):
         producto_actual = df[df.Numero == codigo_tinta_actual]
         producto_actual = producto_actual["Nombre"]
         producto_actual = producto_actual.to_string()
-        print(producto_actual)
+        print(producto_actual.encode('utf-8', errors='ignore').decode('utf-8'))
         return producto_actual
 
     def habilitar_cantidad():
