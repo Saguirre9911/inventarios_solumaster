@@ -23,12 +23,12 @@ for x in rango_for:
         for y in range(len(dataframe_pequeño)):
             cantidad_en_lote = dataframe_pequeño.iloc[y, 16]
             suma_lote = suma_lote + cantidad_en_lote
-            suma_lote = int(suma_lote)
+            suma_lote = float(suma_lote)
             # print(dataframe_pequeño['Total disponible    '])
             # print(suma_lote)
     else:
         # print(dataframe_pequeño['Total disponible    '])
-        suma_lote = int(dataframe_pequeño["Total disponible    "])
+        suma_lote = float(dataframe_pequeño["Total disponible    "])
 
         # print(suma_lote/1000)
 
@@ -40,7 +40,7 @@ df_inventarios["Cant.uso"] = df_inventarios["Cant.uso"].replace(
 )
 
 df_inventarios["Diferencia"] = (
-    df_inventarios["Cant.uso"] - df_inventarios["Total_lotes"]
+    df_inventarios["Total_lotes"] - df_inventarios["Cant.uso"]
 )
 df_inventarios = df_inventarios.iloc[:, 1:]  # Elimina la primera columna
 df_inventarios.set_index(

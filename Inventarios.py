@@ -136,6 +136,8 @@ def pulsa(tecla):
         global bandera_enter
         # Codigo para agregar al excel cada uno de los codigos
         valor_cantidad = cantidad.get()
+        print("codigo de tinta actual: ", codigo_tinta_actual)
+        print("cantidad ingresada: ", valor_cantidad)
         # print(codigo_tinta_actual)
         for i in range(len(lista)):
             for j in range(len(lista[i])):
