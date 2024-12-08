@@ -1,2 +1,7 @@
 solumaster_venv
 *.xlsx
+.DS_Store
+*.pyc
+solumaster-inventarios-3.11
+*.zip
+*.xml
