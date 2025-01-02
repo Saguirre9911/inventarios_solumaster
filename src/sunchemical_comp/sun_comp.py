@@ -7,8 +7,8 @@ import pandas as pd
 
 
 class Comparador:
-    def __init__(self, ruta_zip):
-        self.ruta_zip = ruta_zip
+    def __init__(self):
+        
         self.namespaces = {
             "cac": "urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2",
             "cbc": "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2",
@@ -21,7 +21,7 @@ class Comparador:
         self.df_agrupado = pd.DataFrame()
         self.exact_descriptions = pd.DataFrame()
         self.inventario = pd.DataFrame()
-
+        self.ruta_zip = ""
     def procesar(self):
         for file_name in os.listdir(self.ruta_zip):
             if file_name.endswith(".zip"):
@@ -98,12 +98,35 @@ class Comparador:
         inventario_path = "Inventario_Solumaster_papa.xlsx"
         self.inventario = pd.read_excel(inventario_path)
         return self.inventario
+    
+    def leer_opcion(self):
+        # Primer input: corte del mes (1 o 2)
+        while True:
+            opcion_corte = input("Escoja el corte del mes (1 o 2): ")
+            if opcion_corte in ["1", "2"]:
+                break
+            else:
+                print("Entrada inválida. Por favor, ingrese solo '1' o '2'.")
+
+        # Segundo input: mes (1 al 12, por ejemplo)
+        while True:
+            opcion_mes = input("Escoja el número del mes (1 al 12): ")
+            # Verificamos que sea un dígito y que esté dentro del rango permitido
+            if opcion_mes.isdigit() and 1 <= int(opcion_mes) <= 12:
+                break
+            else:
+                print("Entrada inválida. Por favor, ingrese un número entre 1 y 12.")
+
+        return opcion_corte, opcion_mes
 
 
 if __name__ == "__main__":
     # Ejemplo de uso
-    ruta_zip = "docs/sun_chemical_xml"
-    comparador = Comparador(ruta_zip)
+    comparador = Comparador()
+    corte, mes = comparador.leer_opcion()
+    comparador.ruta_zip = f"docs/sun_chemical_xml/{corte}"
+    print(comparador.ruta_zip)
+    
     df_agrupado, exact_descriptions = comparador.procesar()
     inventario = comparador.leer_informe_inventario()
 
@@ -140,4 +163,4 @@ if __name__ == "__main__":
     df_combinado = df_combinado[['id', 'descripcion', 'cantidad', 'Diferencia', 'diferencia_facturacion']]
     df_combinado = df_combinado.rename(columns={'Diferencia': 'inventario', 'cantidad': 'facturacion'})
     # Guardar el DataFrame combinado en un archivo Excel
-    df_combinado.to_excel("diferencia_facturacion.xlsx", index=False)
+    df_combinado.to_excel(f"diferencia_facturacion_corte{mes}_{corte}.xlsx", index=False)
