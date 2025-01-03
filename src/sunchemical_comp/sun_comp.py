@@ -163,4 +163,4 @@ if __name__ == "__main__":
     df_combinado = df_combinado[['id', 'descripcion', 'cantidad', 'Diferencia', 'diferencia_facturacion']]
     df_combinado = df_combinado.rename(columns={'Diferencia': 'inventario', 'cantidad': 'facturacion'})
     # Guardar el DataFrame combinado en un archivo Excel
-    df_combinado.to_excel(f"diferencia_facturacion_corte{mes}_{corte}.xlsx", index=False)
+    df_combinado.to_excel(f"src/sunchemical_comp/diferencia_facturacion_corte{corte}_mes{mes}.xlsx", index=False)
