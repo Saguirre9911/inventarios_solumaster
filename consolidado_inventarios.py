@@ -15,13 +15,30 @@ rango_for = df_lotes_sin_duplicados["N° de ítem        "]
 suma_lote = 0
 df_inventarios["Total_lotes"] = 0
 
+df_lotes["Total disponible    "] = (
+    df_lotes["Total disponible    "]
+      .astype(str)                     # Garantiza str
+      .str.strip()                     # Quita espacios
+      .str.replace(',', '', regex=False)  # Elimina comas
+      .astype(float)                   # Convierte a float
+)
+
 for x in rango_for:
     dataframe_pequeño = df_lotes[df_lotes["N° de ítem        "] == x]
     suma_lote = 0
+    import pandas as pd
+
+
+
+
     # print(dataframe_pequeño)
     if len(dataframe_pequeño) > 1:
         for y in range(len(dataframe_pequeño)):
             cantidad_en_lote = dataframe_pequeño.iloc[y, 16]
+
+            cantidad_en_lote=float(cantidad_en_lote)
+            print("esto es sumalote",suma_lote)
+            print("esto es cantidad_en_lote",cantidad_en_lote)
             suma_lote = suma_lote + cantidad_en_lote
             suma_lote = float(suma_lote)
             # print(dataframe_pequeño['Total disponible    '])
